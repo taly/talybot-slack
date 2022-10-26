@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect
 import os
+import sys
+import logging
 
 SLACK_AUTHORIZE_URL = 'https://slack.com/oauth/authorize'
 SLACK_ACCESS_URL = 'https://slack.com/api/oauth.access'
@@ -7,6 +9,8 @@ SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
 SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
 
 app = Flask(__name__)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.DEBUG)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
